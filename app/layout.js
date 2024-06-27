@@ -1,5 +1,7 @@
-import Navagation from './components/Navagation';
-import Logo from './components/Logo';
+import Navagation from '@/app/_components/Navagation';
+import Logo from '@/app/_components/Logo';
+
+import '@/app/_styles/globals.css';
 
 export const metadata = {
   title: 'Next.js',
@@ -9,7 +11,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang='en'>
-      <body>
+      <body className='bg-blue-900 text-gray-50 min-h-screen'>
         <header>
           <Logo />
           <Navagation />
