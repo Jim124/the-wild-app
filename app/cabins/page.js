@@ -11,7 +11,6 @@ export const metadata = {
 
 // searchParams only available in page.js
 export default async function Page({ searchParams }) {
-  console.log(searchParams);
   const filter = searchParams?.capacity ?? 'all';
   return (
     <div>
