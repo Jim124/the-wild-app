@@ -9,6 +9,7 @@ const authConfig = {
     }),
     // CredentialProvider,
   ],
+  callbacks: {},
 };
 export const {
   handlers: { GET, POST },
