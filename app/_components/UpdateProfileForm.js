@@ -4,7 +4,7 @@ import { useFormStatus } from 'react-dom';
 import { updateProfile } from '../_lib/actions';
 
 function UpdateProfileForm({ children, guest }) {
-  const { fullName, email, nationality, nationalId, countryFlag, id } = guest;
+  const { fullName, email, nationalId, countryFlag, id } = guest;
 
   return (
     <form
