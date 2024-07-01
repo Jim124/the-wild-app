@@ -23,33 +23,28 @@ export default async function Navigation() {
             About
           </Link>
         </li>
-        {session?.user?.image ? (
-          <Link
-            href='/account'
-            className='hover:text-accent-400 transition-colors flex gap-4 items-center'
-          >
-            <img
-              src={session.user.image}
-              alt={session.user.name}
-              className='h-8 rounded-full'
-            />
-            <span>Guest area</span>
-          </Link>
-        ) : (
-          <Link
-            href='/account'
-            className='hover:text-accent-400 transition-colors'
-          >
-            Guest area
-          </Link>
-        )}
+
         <li>
-          {/* <Link
-            href='/account'
-            className='hover:text-accent-400 transition-colors'
-          >
-            Guest area
-          </Link> */}
+          {session?.user?.image ? (
+            <Link
+              href='/account'
+              className='hover:text-accent-400 transition-colors flex gap-4 items-center'
+            >
+              <img
+                src={session.user.image}
+                alt={session.user.name}
+                className='h-8 rounded-full'
+              />
+              <span>Guest area</span>
+            </Link>
+          ) : (
+            <Link
+              href='/account'
+              className='hover:text-accent-400 transition-colors'
+            >
+              Guest area
+            </Link>
+          )}
         </li>
       </ul>
     </nav>

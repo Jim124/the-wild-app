@@ -9,11 +9,13 @@ const authConfig = {
     }),
     // CredentialProvider,
   ],
-  callbacks: {},
+  callbacks: {
+    authorized(auth, request) {
+      return !!auth?.auth?.user;
+    },
+  },
 };
 export const {
   handlers: { GET, POST },
   auth,
-  signIn,
-  signOut,
 } = NextAuth(authConfig);
