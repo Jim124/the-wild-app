@@ -9,7 +9,7 @@ async function Page() {
   const username = session.user.name.split(' ').at(0);
   return (
     <h2 className='font-semibold text-2xl text-accent-400 mb-7'>
-      Welcome back {username}
+      Welcome {username}
     </h2>
   );
 }
