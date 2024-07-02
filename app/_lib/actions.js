@@ -69,5 +69,9 @@ export async function updateReservation(formData) {
   } catch (error) {
     throw new Error(error.message);
   }
+  // revalidation
+  revalidatePath('/account/reservations');
+  revalidatePath(`/account/reservations/edit/${bookingId}`);
+  // redirect
   redirect('/account/reservations');
 }
