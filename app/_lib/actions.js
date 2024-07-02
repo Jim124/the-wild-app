@@ -4,6 +4,7 @@ import { supabase } from './supabase';
 import { auth, signIn, signOut } from './auth';
 import { revalidatePath } from 'next/cache';
 import { deleteBooking, getBookings, updateBooking } from './data-service';
+import { redirect } from 'next/navigation';
 
 export async function signInAction() {
   await signIn('google', { redirectTo: '/account' });
@@ -51,16 +52,15 @@ export async function deleteReservationByBookingId(bookingId) {
 
 export async function updateReservation(formData) {
   const bookingId = formData.get('bookingId');
-  console.log(typeof bookingId);
 
-  const observations = formData.get('observations');
-  const numGuests = formData.get('numGuests');
+  const observations = formData.get('observations').slice(0, 1000);
+  const numGuests = Number(formData.get('numGuests'));
   const session = await auth();
   if (!session) throw new Error('You must be logged in');
   const guestBookings = await getBookings(session.user.guestId);
   const guestBookIds = guestBookings.map((booking) => booking.id);
   if (!guestBookIds.includes(Number(bookingId)))
-    throw new Error('You are not allowded to delete this booking');
+    throw new Error('You are not allowded to update this booking');
   try {
     const { data, error } = await updateBooking(bookingId, {
       observations,
@@ -69,5 +69,5 @@ export async function updateReservation(formData) {
   } catch (error) {
     throw new Error(error.message);
   }
-  revalidatePath('/account/reservations');
+  redirect('/account/reservations');
 }
