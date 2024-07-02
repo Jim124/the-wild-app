@@ -3,7 +3,12 @@
 import { supabase } from './supabase';
 import { auth, signIn, signOut } from './auth';
 import { revalidatePath } from 'next/cache';
-import { deleteBooking, getBookings, updateBooking } from './data-service';
+import {
+  deleteBooking,
+  getBookings,
+  updateBooking,
+  createReservation,
+} from './data-service';
 import { redirect } from 'next/navigation';
 
 export async function signInAction() {
@@ -74,4 +79,29 @@ export async function updateReservation(formData) {
   revalidatePath(`/account/reservations/edit/${bookingId}`);
   // redirect
   redirect('/account/reservations');
+}
+
+export async function createBooking(bookingData, formData) {
+  // get all data from formData
+  // Object.entries(formData.entries());
+  const session = await auth();
+  if (!session) throw new Error('You must be logged in');
+  const newBooking = {
+    ...bookingData,
+    guestId: session.user.guestId,
+    numGuests: Number(formData.get('numGuests')),
+    observations: formData.get('observations'),
+    extrasPrice: 0,
+    totalPrice: bookingData.cabinPrice,
+    isPaid: false,
+    hasBreakfast: false,
+    status: 'unconfirmed',
+  };
+  try {
+    const { data, error } = await createReservation(newBooking);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+  revalidatePath(`/cabins/${bookingData.cabinId}`);
+  redirect('/cabins/thankyou');
 }
